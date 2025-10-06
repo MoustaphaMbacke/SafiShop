@@ -37,8 +37,8 @@ SECRET_KEY = 'django-insecure-!y*=s&zo*)x4(mw@8mnxxfz!*7=)m)jh_(mf9(^lr6f=3(6^=j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['safishop-igof.onrender.com', 'www.safi-shop.com']
-CSRF_TRUSTED_ORIGINS = []
+ALLOWED_HOSTS = ['safishop-igof.onrender.com', 'www.safi-shop.com', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://safishop-igof.onrender.com', 'https://www.safi-shop.com']
 # SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
 
