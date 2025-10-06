@@ -347,45 +347,45 @@
                 {% endif %}
 
                 <script>
-                        setTimeout (() => {
-                            $(".alert").alert("close");
-                        }, 5000)
+                    setTimeout (() => {
+                        $(".alert").alert("close");
+                    }, 5000)
                     </script>
                 </div>
-        </div>
-    </header>
-    <div class="mobile-header-active mobile-header-wrapper-style">
-        <div class="mobile-header-wrapper-inner">
-            <div class="mobile-header-top">
-                <div class="mobile-header-logo">
-                    <a href="{% url 'core:index' %}"><img src="{% static 'assets/imgs/logo1.png' %}" alt="logo" /></a>
-                </div>
-                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                    <button class="close-style search-close">
-                        <i class="icon-top"></i>
-                        <i class="icon-bottom"></i>
-                    </button>
-                </div>
             </div>
-            <div class="mobile-header-content-area">
-                <div class="mobile-search search-style-3 mobile-header-border">
-                    <form action="#">
-                        <input type="text" placeholder="Rechercher un produit..." />
-                        <button type="submit"><i class="fi-rs-search"></i></button>
-                    </form>
+        </header>
+        <div class="mobile-header-active mobile-header-wrapper-style">
+            <div class="mobile-header-wrapper-inner">
+                <div class="mobile-header-top">
+                    <div class="mobile-header-logo">
+                        <a href="{% url 'core:index' %}"><img src="{% static 'assets/imgs/logo1.png' %}" alt="logo" /></a>
+                    </div>
+                    <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                        <button class="close-style search-close">
+                            <i class="icon-top"></i>
+                            <i class="icon-bottom"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="mobile-menu-wrap mobile-header-border">
-                    <!-- mobile menu start -->
-                    <nav>
-                        <ul class="mobile-menu font-heading">
-                            <li class="menu-item-has-children">
-                                <a href="{% url 'core:index' %}">Accueil</a>
-                                <ul class="dropdown">
-                                    <li><a href="{% url 'core:index' %}">Accueil</a></li>
-                                    
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children">
+                <div class="mobile-header-content-area">
+                    <div class="mobile-search search-style-3 mobile-header-border">
+                        <form action="#">
+                            <input type="text" placeholder="Rechercher un produit..." />
+                            <button type="submit"><i class="fi-rs-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="mobile-menu-wrap mobile-header-border">
+                        <!-- mobile menu start -->
+                        <nav>
+                            <ul class="mobile-menu font-heading">
+                                <li class="menu-item-has-children">
+                                    <a href="{% url 'core:index' %}">Accueil</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{% url 'core:index' %}">Accueil</a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children">
                                 <a href="{% url 'core:product-list'%}">Boutique</a>
                                 <ul class="dropdown">
                                     <li><a href="{% url 'core:product-list'%}">Boutique</a></li>
@@ -428,6 +428,7 @@
                     <!-- mobile menu end -->
                 </div>
                 <div class="mobile-header-info-wrap">
+
                     <div class="single-mobile-header-info">
                         <a href="{% url 'core:contact' %}"><i class="fi-rs-marker"></i> Notre emplacement </a>
                     </div>
@@ -450,6 +451,8 @@
                     <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-pinterest-white.svg' %}" alt="" /></a>
                     <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-youtube-white.svg' %}" alt="" /></a>
                 </div>
+                <a href="https://wa.me/221786369928"><img style="width: 60px; float: right;" src="{% static 'assets/imgs/logo-whatsapp.png' %}" alt="hotline" /></a> <br><br>
+                
                 <div class="site-copyright">Copyright 2025 © SafiShop. Tous les droits reservés. Développé par Cinéinformatique.</div>
             </div>
         </div>
