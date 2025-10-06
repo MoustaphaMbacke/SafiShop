@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
+import environ
+import dj_database_url
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -34,7 +37,7 @@ SECRET_KEY = 'django-insecure-!y*=s&zo*)x4(mw@8mnxxfz!*7=)m)jh_(mf9(^lr6f=3(6^=j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['safishop-igof.onrender.com']
 CSRF_TRUSTED_ORIGINS = []
 # SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 
@@ -68,7 +71,7 @@ INSTALLED_APPS = [
     # blog
     'blog',
 
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'safi.urls'
@@ -113,17 +116,22 @@ WSGI_APPLICATION = 'safi.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'railway',
-            'USER': 'postgres',
-            'PASSWORD': os.environ.get('DB_PASSWORD_YO'),
-            'HOST': 'metro.proxy.rlwy.net',  # Or your PostgreSQL server's IP/hostname
-            'PORT': '18921',       # Default PostgreSQL port
-        }
-    }
 
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': 'railway',
+#             'USER': 'postgres',
+#             'PASSWORD': os.environ.get('DB_PASSWORD_YO'),
+#             'HOST': 'metro.proxy.rlwy.net',  # Or your PostgreSQL server's IP/hostname
+#             'PORT': '18921',       # Default PostgreSQL port
+#         }
+#     }
+
+
+DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -162,7 +170,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = 'media/'
