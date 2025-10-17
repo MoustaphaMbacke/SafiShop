@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 
 import environ
-import django_heroku
 import dj_database_url
 
 from decouple import config
@@ -44,7 +43,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-!y*=s&zo*)x4(mw@8mnxx
 
 DEBUG = True
 
-ALLOWED_HOSTS = [ '34.241.93.129' '127.0.0.1', 'safishop-igof.onrender.com', 'www.safi-shop.com']
+ALLOWED_HOSTS = [ '127.0.0.1', 'safishop-igof.onrender.com', 'www.safi-shop.com']
 CSRF_TRUSTED_ORIGINS = ['https://safishop-igof.onrender.com', 'https://www.safi-shop.com']
 # SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 

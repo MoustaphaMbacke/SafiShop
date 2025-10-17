@@ -111,3 +111,31 @@ validate_email==1.3
 whitenoise==6.11.0
 yarl==1.20.1
 zope.interface==7.2
+
+# [Unit]
+# Description=gunicorn daemon
+# After=network.target
+
+# [Service]
+# User=ubuntu
+# Group=www-data
+# WorkingDirectory=/home/ubuntu/SafiShop
+# ExecStart=/home/ubuntu/SafiShop/envi1/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/SafiShop.sock safi.wsgi:application
+
+# [Install]
+# WantedBy=multi-user.target
+
+# server {
+#     listen 80;
+#     server_name 34.241.93.129;  # Replace with your server's IP address or domain name
+
+#     location = /favicon.ico { access_log off; log_not_found off; }
+#     location /static/ {
+#         root /home/ubuntu/SafiShop;
+#     }
+
+#     location / {
+#         include proxy_params;
+#         proxy_pass http://unix:/home/ubuntu/SafiShop.sock;
+#     }
+# }
