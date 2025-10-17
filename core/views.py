@@ -651,9 +651,11 @@ def add_to_wishlist(request):
             user=request.user,
             product=product,
         )
+        
         context = {
             "bool": True
         }
+        return redirect("userauths:login")
 
     return JsonResponse(context)
 

@@ -120,29 +120,29 @@ WSGI_APPLICATION = 'safi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # DATABASES = {
 #         'default': {
 #             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': 'railway',
-#             'USER': 'postgres',
-#             'PASSWORD': os.environ.get('DB_PASSWORD_YO'),
-#             'HOST': 'metro.proxy.rlwy.net',  # Or your PostgreSQL server's IP/hostname
-#             'PORT': '18921',       # Default PostgreSQL port
+#             'NAME': 'safishopdb',
+#             'USER': 'safishopdbadmin',
+#             'PASSWORD': '4178774Mb#',
+#             'HOST': 'safishopdb.c7ieeoesox51.eu-west-1.rds.amazonaws.com',  # Or your PostgreSQL server's IP/hostname
+#             'PORT': '5432',       # Default PostgreSQL port
 #         }
 #     }
 
 
-DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
-    }
+# DATABASES = {
+#         'default': dj_database_url.parse(env('DATABASE_URL'))
+#     }
 
 
 # AMAZON
