@@ -1,0 +1,81 @@
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <main class="main">
+        <main class="main" id="wishlist-list">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="{% url 'core:index' %}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Accueil</a>
+                    <span></span> Boutique <span></span> Filtrer
+                </div>
+            </div>
+        </div>
+        <div class="container mb-30 mt-50">
+            <div class="row">
+                <div class="col-xl-10 col-lg-12 m-auto">
+                    <div class="mb-50">
+                        <h1 style="text-align: center; margin-bottom: 10px;" class="heading-2 mb-10">Vos Favories</h1>
+                        <h6 style="text-align: center; margin-bottom: 10px; font-size: 15px;" class="text-body">Il y'a <span class="text-brand">{{ wishlist.count }}</span> product{{ wishlist.count|pluralize:"s" }} dans cette liste</h6>
+                    </div>
+                    <div class="table-responsive shopping-summery">
+
+                        <div>
+                            <section id="cart" class="border p-md-4" style="border: none; border-radius: 20px; margin-bottom: 8px;">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            <td>Supprimer</td>
+                                            <td>Image</td>
+                                            <td>Nom du produit</td>
+                                            <td>Status</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for w in w %}
+                                        <tr>
+                                            <td class="action text-center" data-title="Remove">
+                                                <button style="border: none; background: none;" data-wishlist-product="{{ w.id }}"  class="text-body delete-wishlist-product"><i class="fi-rs-trash"></i></button>
+                                            </td>
+
+                                
+                                            <td class="action text-center" data-title="Supprimer">
+                                                <button style="border: none; background: none;" data-wishlist-product="{{ w.id }}"  class="text-body delete-wishlist-product"><i class="fi-rs-trash"></i></button>
+                                            </td>
+                                            <td class="image product-thumbnail pt-40">
+                                                {% if w.product.pid %}
+                                                    <a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' w.product.pid %}"> <img src="{{w.product.image.url}}" alt="image de {{ w.product.title }}"></a>
+                                                {% else %}
+                                                    <img src="{{w.product.image.url}}" alt="image de {{ w.product.title }}">
+                                                {% endif %}
+                                            </td>
+                                            <td><h6 class="mb-5">
+                                                {% if w.product.pid %}
+                                                    <a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' w.product.pid %}">{{ w.product.title }}</a>
+                                                {% else %}
+                                                    {{ w.product.title }}
+                                                {% endif %}
+                                            </h6></td>
+                                            <td class="price" data-title="Prix unitaire"><h4 class="text-body">{{w.product.price|floatformat:0}} Fcfa</h4></td>
+                                            <td class="text-center detail-info" data-title="Status">
+                                                <h6>En Stock</h6>
+                                            </td>
+                                            <td class="text-right" data-title="Voir">
+                                                {% if w.product.pid %}
+                                                    <a style="text-align: center;" href="{% url 'core:product-detail' w.product.pid %}" class="btn btn-md">Voir</a>
+                                                {% else %}
+                                                    <span class="btn btn-md disabled">Voir</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>

@@ -1,0 +1,644 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Safi-Shop - boutique enligne au senegal - Le Premier Marketplcae Sénégalais</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/imgs/theme/favicon.png' %}" />
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/slider-range.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body>
+    
+
+    <header class="header-area header-style-1 header-height-2">
+        <div class="mobile-promotion">
+            <span>Grande réduction, <strong>de de 30%</strong> sur toutes vos 1er <strong>Commandes</strong> du mois</span>
+        </div>
+        <div class="header-top header-top-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info">
+                            <ul>
+                                <li><a href="{% url 'core:about_us' %}">A propos de nous</a></li>
+                                {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'core:dashboard' %}">Mon Compte</a></li>
+                                <li><a href="{% url 'core:wishlist' %}">Favories</a></li>
+                                {% else %}
+                                <li><a href="{% url 'userauths:sign-in' %}">Mon Compte</a></li>
+                                <li><a href="{% url 'userauths:sign-in' %}">Favories</a></li>
+                                {% endif %}
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4">
+                        <div class="text-center">
+                            <div id="news-flash" class="d-inline-block">
+                                <ul>
+                                    <li> Economisez 30% pour Chaque produit acheté sur notre site </li>
+                                    <li> Vous pouvez obtenir une réduction  - En utilisant les coupons</li>
+                                    <li> Achetez des maintenant , Economisez 50%</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info header-info-right">
+                            <ul>
+                                <li>Besoins d'aide ? Contactez nous: <strong class="text-brand">786369928</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="header-wrap">
+                    <div class="logo logo-width-1">
+                        <a href="{% url 'core:index' %}"><img src="{% static 'assets/imgs/logo 1.png' %}" alt="logo" /></a>
+                    </div>
+                    <div class="header-right">
+                        <div class="search-style-2">
+                            <form action="{% url 'core:search' %}" method="GET">
+                                
+                                <input type="text" placeholder="Rechercher en tapant un mot..." name="q" />
+                                <button class="material-symbols-outlined" type="submit"><span class="material-symbols-outlined"><i class="fa-solid fa-magnifying-glass"></i></span></button>
+                            </form>
+                        </div>
+                        <div class="header-action-right">
+                            <div class="header-action-2">
+                                
+                                
+                                <div class="header-action-icon-2">
+                                    <a href="{% url 'core:wishlist' %}">
+                                        <img class="svgInject" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
+                                        {% if request.user.is_authenticated %}
+                                        <span id="wishlist-count" class="pro-count blue">{{ wishlist.count }}</span>
+                                        {% else %}
+                                        <span id="wishlist-count" class="pro-count blue">0</span>
+                                        {% endif %}
+
+                                        <!-- {% if request.user.is_authenticated %}
+                                        <span class="pro-count blue">{{ wishlist.count }}</span>
+                                        {% else %}
+                                        <span class="pro-count blue">0</span>
+                                        {% endif %} -->
+                                    </a>
+                                    {% if request.user.is_authenticated %}
+                                    <a href="{% url 'core:wishlist' %}"><span class="lable">Favorie</span></a>
+                                    {% else %}
+                                    <a href="{% url 'userauths:sign-in' %}"><span class="lable">Favorie</span></a>
+                                    {% endif %}
+                                </div>
+                                <div class="header-action-icon-2">
+                                    <a class="mini-cart-icon" href="{% url 'core:cart' %}">
+                                        <img alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}" />
+                                        <span class="pro-count blue cart-items-count">{{ request.session.cart_data_obj|length }}</span>
+                                    </a>
+                                    <a href="{% url 'core:cart' %}"><span class="lable">Panier</span></a>
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2">
+
+                                        <ul>
+                                            {% for product_id, item in cart_data.items %}
+                                            <li>
+                                                <div class="shopping-cart-img">
+                                                    <a href="{% url 'core:product-detail' item.pid %}"><img alt="Nest" src="{{ item.image }}" /></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="{% url 'core:product-detail' item.pid %}">{{item.title}}</a></h4>
+                                                    <h4><span>{{ item.qty }} × </span>{{item.price}} Fcfa</h4>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <!-- <td class="action text-center" data-title="Remove"><button style="border: none; background: none;"  class="text-body delete-product" data-product="{{ product_id }}"><i class="fi-rs-trash"></i></button></td> -->
+                                                    <!-- <a href="#"><i class="fi-rs-cross-small"></i></a> -->
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                           
+                                        </ul>
+                                        
+                                        <div class="shopping-cart-footer">
+                                            <div class="shopping-cart-total">
+                                                <h4>Total : <span>{{cart_total_amount|floatformat:0}} Fcfa</span></h4>
+                                            </div>
+                                            <div class="shopping-cart-button">
+                                                <a href="{% url 'core:cart' %}" class="outline">Voir Panier</a>
+                                                <a href="">Vérifier</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-action-icon-2">
+                                    <a href="page-account.html">
+                                        <img class="svgInject" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-user.svg' %}" />
+                                    </a>
+                                    {% if request.user.is_authenticated %}
+                                    <a href="{% url 'core:dashboard' %}"><span class="lable ml-0">Compte</span></a>
+                                    
+
+                                    {% else %}
+                                    <a href="{% url 'userauths:sign-in' %}"><span class="lable ml-0">Compte</span></a>
+                                    {% endif %}
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                        <ul>
+                                            {% if request.user.is_authenticated %}
+                                            <li><a href="{% url 'core:dashboard' %}"><i class="fi fi-rs-user mr-10"></i>Mon compte</a></li>
+                                            {% else %}
+                                            <li><a href="{% url 'userauths:sign-in' %}"><i class="fi fi-rs-user mr-10"></i>Mon compte</a></li>
+                                            {% endif %}
+                                            <li><a href="{% url 'useradmin:dashboard' %}"><i class="fi fi-rs-user mr-10"></i>Tableau de Bord Admin</a></li>
+                                            
+                                            {% if request.user.is_authenticated %}
+                                            <li><a href="{% url 'core:wishlist' %}"><i class="fi fi-rs-heart mr-10"></i>Mes favories</a></li>
+                                            {% else %}
+                                            <li><a href="{% url 'userauths:sign-in' %}"><i class="fi fi-rs-heart mr-10"></i>Mes favories</a></li>
+                                            {% endif %}
+
+                                            <li><a href="{% url 'core:dashboard' %}"><i class="fi fi-rs-settings-sliders mr-10"></i>Paramètre</a></li>
+                                            {% if request.user.is_authenticated %}
+                                            <li><a href="{% url 'userauths:sign-out' %}"><i class="fi fi-rs-sign-out mr-10"></i>Se déconnecter</a></li>
+                                            {% else %}
+                                            <li><a href="{% url 'userauths:sign-in' %}"><i class="fi fi-rs-sign-in mr-10"></i>Se connecter</a></li>
+                                            {% endif %}
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom header-bottom-bg-color sticky-bar">
+            <div class="container">
+                <div class="header-wrap header-space-between position-relative">
+                    <div class="logo logo-width-1 d-block d-lg-none">
+                        <a href="{% url 'core:index' %}"><img src="{% static 'assets/imgs/logo 1.png' %}" alt="logo" /></a>
+                    </div>
+                    <div class="header-nav d-none d-lg-flex">
+                        <div class="main-categori-wrap d-none d-lg-block">
+                            <a class="categories-button-active" href="{% url 'core:category-list' %}">
+                                <span class="fi-rs-apps"></span> <span class="et">Fouiller</span>les catégories
+                                <i class="fi-rs-angle-down"></i>
+                            </a>
+                            <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
+                                <div class="d-flex categori-dropdown-inner">
+                                    <ul c>
+                                        {% for category in categories %}
+                                        <li>
+                                            <a href="{% url 'core:category-product-list' category.cid %}"> <img src="{{ category.image.url }}" alt="" />{{ category.title }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a class="active" href="{% url 'core:index' %}">Accueil<i class="fi-rs-angle-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="{% url 'core:index' %}">Accueil</a></li> 
+                                        </ul>
+                                    </li>
+    
+                                    <li>
+                                        <a href="{% url 'core:product-list'%}">Boutique</a>
+                                    
+                                    <li>
+                                        <a href="{% url 'core:category-list' %}">Catégorie <i class="fi-rs-angle-down"></i></a>
+                                        <ul class="sub-menu">
+                                            {% for category in categories %}
+                                            <li><a href="{% url 'core:category-product-list' category.cid %}">{{category.title}}</a></li>
+                                            {% endfor %}
+                                            <hr>
+                                            <li><a href="{% url 'core:category-list' %}">Toutes les catégories</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'core:vendor-list' %}">Vendeurs <i class="fi-rs-angle-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="{% url 'core:vendor-list' %}">Nos vendeurs</a></li>
+                                        </ul>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{% url 'blog:index' %}">Blog <i class="fi-rs-angle-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="{% url 'blog:index' %}">Blog</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'core:index' %}">Pages <i class="fi-rs-angle-down"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a href="{% url 'core:about_us' %}">A Propos</a></li>
+                                            <li><a href="{% url 'core:contact' %}">Contact</a></li>
+                                            {% if request.user.is_authenticated %}
+                                            <li><a href="{% url 'core:dashboard' %}">Mon Compte</a></li>
+                                            {% else %}
+                                            <li><a href="{% url 'userauths:sign-in' %}">Mon Compte</a></li>
+                                            <li><a href="{% url 'userauths:sign-in' %}">Connexion</a></li>
+                                            <li><a href="{% url 'userauths:sign-up' %}">S'inscrire</a></li>
+                                            {% endif %}
+                                            <li><a href="page-forgot-password.html">Mot de passe oublié</a></li>
+                                            <li><a href="{% url 'core:privacy_policy' %}">Politique de confidentialité</a></li>
+                                            <li><a href="{% url 'core:terms_of_service' %}">Termes du service</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'core:about_us' %}">A propos de nous</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'core:contact' %}">Contactez nous</a>
+                                        
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="hotline d-none d-lg-flex">
+                        <a href="https://wa.me/221786369928"><img style="width: 60px;" src="{% static 'assets/imgs/logo-whatsapp.png' %}" alt="hotline" /></a>
+                        <!-- Whatsapp
+                        <p>1900 - 888<span>24/7 Support Center</span></p> -->
+                    </div>
+                    <div class="header-action-icon-2 d-block d-lg-none">
+                        <div class="burger-icon burger-icon-white">
+                            <span class="burger-icon-top"></span>
+                            <span class="burger-icon-mid"></span>
+                            <span class="burger-icon-bottom"></span>
+                        </div>
+                    </div>
+                    <div class="header-action-right d-block d-lg-none">
+                        <div class="header-action-2">
+                            <div class="header-action-icon-2">
+                                <a href="{% url 'core:wishlist' %}">
+                                    <img alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
+                                    <span class="pro-count white">{{ request.session.cart_data_obj|length }}</span>
+                                </a>
+                            </div>
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="{% url 'core:cart' %}">
+                                    <img alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}" />
+                                    <span class="pro-count white ">{{ request.session.cart_data_obj|length }}</span>
+                                </a>
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                    <ul>
+                                        {% for product_id, item in cart_data.items %}
+                                            <li>
+                                                <div class="shopping-cart-img">
+                                                    <a href="{% url 'core:product-detail' item.pid %}"><img alt="Nest" src="{{ item.image }}" /></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="{% url 'core:product-detail' item.pid %}">{{item.title}}</a></h4>
+                                                    <h4><span>{{ item.qty }} × </span>{{item.price}} Fcfa</h4>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <!-- <td class="action text-center" data-title="Remove"><button style="border: none; background: none;"  class="text-body delete-product" data-product="{{ product_id }}"><i class="fi-rs-trash"></i></button></td> -->
+                                                    <!-- <a href="#"><i class="fi-rs-cross-small"></i></a> -->
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                    </ul>
+                                    <div class="shopping-cart-footer">
+                                        <div class="shopping-cart-total">
+                                            <h4>Total : <span>{{cart_total_amount|floatformat:0}} Fcfa</span></h4>
+                                        </div>
+                                        <div class="shopping-cart-button">
+                                            <a href="{% url 'core:cart' %}">Voir Panier</a>
+                                            <a href="">Vérifier</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{message.tags}}">
+                            <strong>{{ message }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <script>
+                    setTimeout (() => {
+                        $(".alert").alert("close");
+                    }, 5000)
+                    </script>
+                </div>
+            </div>
+        </header>
+        <div class="mobile-header-active mobile-header-wrapper-style">
+            <div class="mobile-header-wrapper-inner">
+                <div class="mobile-header-top">
+                    <div class="mobile-header-logo">
+                        <a href="{% url 'core:index' %}"><img src="{% static 'assets/imgs/logo 1.png' %}" alt="logo" /></a>
+                    </div>
+                    <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                        <button class="close-style search-close">
+                            <i class="icon-top"></i>
+                            <i class="icon-bottom"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mobile-header-content-area">
+                    <div class="mobile-search search-style-3 mobile-header-border">
+                        <form action="{% url 'core:search' %}" method="GET">
+                            <input type="text" placeholder="Rechercher un produit..." name="q" />
+                            <button type="submit"><i class="fi-rs-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="mobile-menu-wrap mobile-header-border">
+                        <!-- mobile menu start -->
+                        <nav>
+                            <ul class="mobile-menu font-heading">
+                                <li class="menu-item-has-children">
+                                    <a href="{% url 'core:index' %}">Accueil</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{% url 'core:index' %}">Accueil</a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children">
+                                <a href="{% url 'core:product-list'%}">Boutique</a>
+                                <ul class="dropdown">
+                                    <li><a href="{% url 'core:product-list'%}">Boutique</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="{% url 'core:vendor-list' %}">Vendeurs</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">Nos vendeurs</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li class="menu-item-has-children">
+                                <a href="{% url 'blog:index' %}">Blog</a>
+                                <ul class="dropdown">
+                                    <li><a href="{% url 'blog:index' %}">Blog</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="{% url 'core:index' %}">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="{% url 'core:about_us' %}">A Propos</a></li>
+                                    <li><a href="{% url 'core:contact' %}">Contact</a></li>
+                                    {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'core:dashboard' %}">Mon Compte</a></li>
+                                    <!-- <li><a href="{% url 'core:dashboard' %}">Réinitialisation de mot de passe</a></li> -->
+                                    <!-- _________ -->
+                                    {% else %}
+                                    <li><a href="{% url 'userauths:sign-in' %}">Mon Compte</a></li>
+                                    <li><a href="{% url 'userauths:sign-in' %}">Connexion</a></li>
+                                    <li><a href="{% url 'userauths:sign-up' %}">inscription</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'core:privacy_policy' %}">Politique de confidentialité</a></li>
+                                    <li><a href="{% url 'core:terms_of_service' %}">Termes du Service</a></li>
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </nav>
+                    <!-- mobile menu end -->
+                </div>
+                <div class="mobile-header-info-wrap">
+
+                    <div class="single-mobile-header-info">
+                        <a href="{% url 'core:contact' %}"><i class="fi-rs-marker"></i> Notre emplacement </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'userauths:sign-out' %}"><i class="fi-rs-user"></i>Se déconnecter</a>
+                        {% else %}
+                        <a href="{% url 'userauths:sign-in' %}"><i class="fi-rs-user"></i>connecter / S'inscrire </a>
+                        {% endif %}
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="{% url 'core:contact' %}"><i class="fi-rs-headphones"></i>(+221) 78 636 99 28 </a>
+                    </div>
+                </div>
+                <div class="mobile-social-icon mb-50">
+                    <h6 class="mb-15">Suivez nous</h6>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-facebook-white.svg' %}" alt="" /></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-twitter-white.svg' %}" alt="" /></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-instagram-white.svg' %}" alt="" /></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-pinterest-white.svg' %}" alt="" /></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-youtube-white.svg' %}" alt="" /></a>
+                </div>
+                <a href="https://wa.me/221786369928"><img style="width: 60px; float: right;" src="{% static 'assets/imgs/logo-whatsapp.png' %}" alt="hotline" /></a> <br><br>
+                
+                <div class="site-copyright">Copyright 2025 © Safi-Shop. Tous les droits reservés. Développé par Cinéinformatique.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-search search-style-3 mobile-header-border">
+        <form action="{% url 'core:search' %}" method="GET">
+            <input class="input2" type="text" placeholder="Rechercher un produit..." name="q" />
+            <button type="submit"><i class="fi-rs-search"></i></button>
+        </form>
+    </div>
+
+    
+    <!--End header-->
+
+
+
+    {% block content %}
+    
+    {% endblock content %}
+
+
+    <footer class="main">
+        <section class="newsletter mb-15">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="position-relative newsletter-inner">
+                            <div class="newsletter-content">
+                                <h2 class="mb-20">
+                                    Restez chez vous  & Obtenez tout ce que vous <br /> voulez depuis Safi-Shop 
+                                </h2>
+                                <p class="mb-45">Débutez vos achats avec <span class="text-brand">Safi-Shop</span></p>
+                                <form class="form-subcriber d-flex">
+                                    <input type="email" placeholder="Votre adresse Email" />
+                                    <button class="btn" type="submit">S'abonner</button>
+                                </form>
+                            </div>
+                            <img src="{% static 'assets/imgs/banner/banner-9.png' %}" alt="newsletter" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        {% include 'includes/figure.html' %}
+
+        <section class="section-padding footer-mid">
+            <div class="container pt-15 pb-20">
+                <div class="row">
+                    <div class="col">
+                        <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
+                            <div class="logo mb-30">
+                                <a href="{% url 'core:index' %}" class="mb-15"><img src="{% static 'assets/imgs/logo 1.png' %}" alt="logo" /></a>
+                                <p class="font-lg text-heading">Une Boutique - Un Produit - Un client</p>
+                            </div>
+                            <ul class="contact-infor">
+                                <li><img src="{% static 'assets/imgs/theme/icons/icon-location.svg' %}" alt="" /><strong>Adresse: </strong> <span> Touba, Dianatoul Mahwa, Palais Ndiouga Kébé</span></li>
+                                <li><img src="{% static 'assets/imgs/theme/icons/icon-contact.svg' %}" alt="" /><strong>Téléphone :</strong><span> (+221) - 78 636 99 28</span></li>
+                                <li><img src="{% static 'assets/imgs/theme/icons/icon-email-2.svg' %}" alt="" /><strong>Email :</strong><span><span> safishop.contact@gmail.com</span>
+                                <li><img src="{% static 'assets/imgs/theme/icons/icon-clock.svg' %}" alt="" /><strong>Ouvert :</strong><span> 08:00 - 23:00, Lundi - Dimenche</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-link-widget col">
+                        <h4 class="widget-title">Entreprise</h4>
+                        <ul class="footer-list mb-sm-5 mb-md-0">
+                            <li><a href="{% url 'core:about_us' %}">A Propos</a></li>
+                            <li><a href="{% url 'core:contact' %}">Contact</a></li>
+                            <li><a href="{% url 'core:privacy_policy' %}">Politique de confidentialité</a></li>
+                            <li><a href="{% url 'core:terms_of_service' %}">Termes &amp; Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-link-widget col">
+                        <h4 class="widget-title">Compte</h4>
+                        <ul class="footer-list mb-sm-5 mb-md-0">
+                        
+                             {% if request.user.is_authenticated %}
+                             <li><a href="{% url 'core:dashboard' %}">Mon compte</a></li>
+                             <li><a href="{% url 'userauths:sign-out' %}">Se déconnecter</a></li>
+                             <li><a href="{% url 'core:cart' %}">Voir Panier</a></li>
+                            <li><a href="{% url 'core:wishlist' %}">Mes Favories</a></li>
+                            {% else %}
+                            <li><a href="{% url 'userauths:sign-in' %}">Se connecter</a></li>
+                            <li><a href="{% url 'userauths:sign-up' %}">S'inscrire</a></li>
+                             <li><a href="{% url 'core:cart' %}">Voir Panier</a></li>
+                            <li><a href="{% url 'userauths:sign-in' %}">Mes Favories</a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-link-widget col">
+                        <h4 class="widget-title">Populaire</h4>
+                        <ul class="footer-list mb-sm-5 mb-md-0">
+                            {% for pp in produits_populaires %}
+                            <li><a href="{% url 'core:product-detail' pp.pid %}">{{pp.title}}</a></li>
+                            {% endfor %}
+                            
+                        </ul>
+                    </div>
+                    <div class="footer-link-widget widget-install-app col">
+                        <h4 class="widget-title">Installer nos Applis</h4>
+                        <p class="wow fadeIn animated">Depuis App Store ou Google Play</p>
+                        <div class="download-app">
+                            <a href="#" class="hover-up mb-sm-2 mb-lg-0"><img class="active" src="{% static 'assets/imgs/theme/app-store.jpg' %}" alt="" /></a>
+                            <a href="#" class="hover-up mb-sm-2"><img src="{% static 'assets/imgs/theme/google-play.jpg' %}" alt="" /></a>
+                        </div>
+                        <p class="mb-20">Paiements sécurisés</p>
+                        <img class="wow fadeIn animated" src="{% static 'assets/imgs/theme/payment-method.png' %}" alt="" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container pb-30">
+            <div class="row align-items-center">
+                <div class="col-12 mb-30">
+                    <div class="footer-bottom"></div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <p class="font-sm mb-0">&copy; 2025, <strong class="text-brand">Safi-Shop</strong> <br />Tous les droits réservés</p>
+                </div>
+                <div class="col-xl-4 col-lg-6 text-center d-none d-xl-block">
+                    <div class="hotline d-lg-inline-flex mr-30">
+                        <img src="{% static 'assets/imgs/theme/icons/phone-call.svg' %}" alt="hotline" />
+                        <p>78 636 99 28<span>Ouvert 8:00 - 23:00</span></p>
+                    </div>
+                    <div class="hotline d-lg-inline-flex">
+                        <img src="{% static 'assets/imgs/theme/icons/phone-call.svg' %}" alt="hotline" />
+                        <p>77 417 87 74<span>24/7 en service</span></p>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block">
+                    <div class="mobile-social-icon">
+                        <h6>Suivez nous</h6>
+                        <a href=""><img src="{% static 'assets/imgs/theme/icons/icon-facebook-white.svg' %}" alt="" /></a>
+                        <a href=""><img src="{% static 'assets/imgs/theme/icons/social-tiktok.svg' %}" alt="" /></a>
+                        <a href=""><img src="{% static 'assets/imgs/theme/icons/icon-instagram-white.svg' %}" alt="" /></a>
+                        <a href=""><img src="{% static 'assets/imgs/theme/icons/icon-youtube-white.svg' %}" alt="" /></a>
+                    </div>
+                    <p class="font-sm">vous aurez une réduction de 15% sur chaque abonnement</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Preloader Start -->
+    <!--<div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <img src="{% static 'assets/imgs/theme/loading.gif' %}" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <!-- Vendor JS-->
+    <script data-cfasync="false" src="{% static '/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/modernizr-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery-migrate-3.3.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/slick.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/jquery.syotimer.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/wow.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/slider-range.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/magnific-popup.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/select2.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/waypoints.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/counterup.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/images-loaded.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/isotope.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/scrollup.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/jquery.vticker-min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/jquery.theia.sticky.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/jquery.elevatezoom.js' %}"></script>
+    <!-- Template  JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/js/shop.js' %}"></script>
+    <script src="{% static 'assets/js/function.js' %}"></script>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AeMfbRAoi69g0cplSY59KNUvPN6aHCAMOSEZ2zW80M3uSanBEWT0xIp8wsTdoVYtrIArY_d6XO-QLAJN&currency=XOF"></script>
+</body>
+
+</html>
+
+

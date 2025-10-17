@@ -1,0 +1,80 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+    <main class="main pages">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="{% url 'core:index' %}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                    <span></span> Pages <span></span> Contact
+                </div>
+            </div>
+        </div>
+        <div class="page-content pt-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 col-lg-12 m-auto">
+                        <section class="row align-items-end mb-50">
+                            <div class="col-lg-6 mb-lg-0 mb-md-5 mb-sm-5">
+                                <h4 class="mb-20 text-brand">Comment pouvons-nous vous aider ? ?</h4>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div><br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 col-lg-12 m-auto">
+                        <section class="mb-50">
+                            <div class="row">
+                                <div class="col-xl-8">
+                                    <div class="contact-from-area padding-20-row-col">
+                                        <h5 class="text-brand mb-10">Formulaire de contact</h5>
+                                        <h2 class="mb-10">Envoyez nous un message</h2>
+                                        <p class="text-muted mb-30 font-sm contact_us_p">Votre adresse e-mail ne sera pas publiée. Les champs obligatoires sont marqués d'un astérisque (*).</p>
+                                        <h4 class="text-success" id="message-response"></h4>
+                                        <form class="contact-form-style mt-30" id="contact-form-ajax"  method="POST">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="input-style mb-20">
+                                                        <input name="full_name" id="full_name"  placeholder="Nom complet*" type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="input-style mb-20">
+                                                        <input name="email" id="email"  placeholder="Votre Adresse Email*" type="email" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="input-style mb-20">
+                                                        <input name="telephone"  id="phone" placeholder="Numéro de Téléphone*" type="tel" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="input-style mb-20">
+                                                        <input name="subject"  id="subject" placeholder="Sujet*" type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="textarea-style mb-30">
+                                                        <textarea name="message" id="message"  placeholder="Message*"></textarea>
+                                                    </div>
+                                                    <button id="contact-form-ajax" class="suebmit submit-auto-width" type="submit">Envoyer</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <p class="form-messege"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 pl-50 d-lg-block d-none">
+                                    <img class="border-radius-15 mt-50" src="{% static 'assets/imgs/page/contact-2.png' %}" alt="" />
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

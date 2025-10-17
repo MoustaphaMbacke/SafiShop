@@ -1,0 +1,74 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <main class="main pages mb-80">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="{% url 'core:index' %}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Accueil</a>
+                    <span></span> Nos vendeurs
+                </div>
+            </div>
+        </div>
+        <div class="page-content pt-50">
+            <div class="container">
+                <div class="archive-header-2 text-center">
+                    <h1 style="font-size: 30px;" class="display-2 mb-50">Liste de nos vendeurs</h1>
+                    <br>
+                </div>
+                <div class="row mb-50">
+                    <div class="col-12 col-lg-8 mx-auto">
+                        <div class="">
+                            <div style="text-align: center;" class="totall-product">
+                                <p style="text-align: center;">Nous avons <strong class="text-brand">{{vendors.count}}</strong> vendeur{{vendors.count|pluralize:"s"}} à ce jour</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row vendor-grid">
+                    {% for v in vendors %}
+                    <div class="col-lg-6 col-md-6 col-12 col-sm-6">
+                        <div class="vendor-wrap style-2 mb-40">
+                            <div class="vendor-img-action-wrap">
+                                <div class="vendor-img">
+                                    <a href="{% url 'core:vendor-detail' v.vid %}">
+                                        <img class="default-img" src="{{v.image.url}}" alt="" />
+                                    </a>
+                                </div>
+                                <div class="mt-10">
+                                    <span class="font-small total-product">{{v.vendor.all.count}} produit{{v.vendor.all.count|pluralize:"s"}}</span>
+                                </div>
+                            </div>
+                            <div class="vendor-content-wrap">
+                                <div class="mb-30">
+                                    <div class="product-category">
+                                        <span class="text-muted">Depuis {{v.date}}</span>
+                                    </div>
+                                    <h4 class="mb-5"><a href="{% url 'core:vendor-detail' v.vid %}">{{v.title}}</a></h4>
+                                    <div class="product-rate-cover">
+                                        <div class="product-rate d-inline-block">
+                                            <div class="product-rating" style="width: 90%"></div>
+                                        </div>
+                                        <span class="font-small ml-5 text-muted"> (4.5)</span>
+                                    </div>
+                                    <div class="vendor-info d-flex justify-content-between align-items-end mt-30">
+                                        <ul class="contact-infor text-muted">
+                                            <li><img src="{% static 'assets/imgs/theme/icons/icon-location.svg' %}" alt="" /><strong>Adresse : <br> </strong> <span>{{v.address}}</span></li>
+                                            <li><img src="{% static 'assets/imgs/theme/icons/icon-contact.svg' %}" alt="" /><strong>Téléphone : <br> </strong><span>{{v.contact}}</span></li>
+                                        </ul>
+                                        <a style="text-align: center;" href="{% url 'core:vendor-detail' v.vid %}" class="btn btn-md">Visiter<i class="fi-rs-arrow-small-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end vendor card-->
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+  {% endblock content %}

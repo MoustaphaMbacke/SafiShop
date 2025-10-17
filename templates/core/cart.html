@@ -1,0 +1,149 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <main class="main" id="cart-list">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="{% url 'core:index' %}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Accueil</a>
+                    <span></span> Boutique
+                    <span></span> Panier
+                </div>
+            </div>
+        </div>
+        {% if totalcartitems > 0 %}
+        <div class="container mb-80 mt-50">
+            <div class="row">
+                <div class="col-lg-12 mb-40">
+                    <h1 style="text-align: center; margin-bottom: 10px;">Votre Panier</h1>
+                    <div>
+                        <h6 style="text-align: center; margin-bottom: 10px; font-size: 15px;">Il y'a <span class="text-brand">{{ totalcartitems }}</span> produit{{ totalcartitems|pluralize:'s' }} dans votre Panier</h6>
+                    </div>
+                </div>
+            </div>
+            <form action="{% url 'core:save_checkout_info' %}" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div>
+                            <section id="cart" class="border p-md-4" style="border: none; border-radius: 20px; margin-bottom: 8px;">
+                                <table width="100%" >
+                                    <thead>
+                                        <tr>
+                                            <td>Actions</td>
+                                            <td>Quanntité</td>
+                                            <td>Image</td>
+                                            <td>Nom du produit</td>
+                                            <td>Prix Unitaire</td>
+                                            <td>Sous-Total</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for product_id, item in cart_data.items %}
+                                        <tr>
+                                            <td >
+                                                <span class="action text-center" data-title="Rafraichir"><button type="button" style="border: none; background: none;"  class="text-body update-product" data-product="{{ product_id }}"><i class="fi-rs-refresh"></i></button></span> <br>Rafraichir <br><br>
+                                                <span class="action text-center" data-title="Supprimer"><button type="button" style="border: none; background: none;"  class="text-body delete-product" data-product="{{ product_id }}"><i class="fi-rs-trash"></i></button></span> <br>Supprimer
+                                            </td>
+                                            <td class="text-center detail-info" data-title="Quantité">
+                                                <div class="mr-14">
+                                                    <input type="number" placeholder="" class="product-qty-{{ product_id }}"  name="" value="{{ item.qty }}" id="">
+                                                </div>
+                                            </td>
+                                            <td class="image product-thumbnail pt-40"><a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' item.pid %}"><img src="{{ item.image }}" alt="image de {{ item.title }}"></a></td>
+                                            <td><h6 class="mb-5"><a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' item.pid %}">{{ item.title|truncatechars:17 }}</a></h6></td>
+                                            <td class="price" data-title="Prix unitaire"><h4 class="text-body">{{item.price|floatformat:0}} Fcfa</h4></td>
+
+                                            <td class="price" data-title="Prix">
+                                                <h4 class="text-brand">{% widthratio item.price 1 item.qty %} Fcfa</h4>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                        
+                            </section><br><br>
+                                <div class="row mt-4">
+                                    <h4 class="mb-30">Bio Data</h4>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="">Nom complet</label>
+                                            <input type="text" required="" name="full_name" value="{{request.user.username|title}}" placeholder="Nom complet">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="">Email</label>
+                                            <input type="text" required="" name="email"  placeholder="téléphone *" value="{{request.user.email}}">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="">Téléphone</label>
+                                            <input type="text" name="mobile" value="{{request.user.profile.phone}}" required="" placeholder="Adresse *">
+                                        </div>
+                                    </div>
+                                    <h4 class="mb-30">Informations d'expédition</h4>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6">
+                                            <label for="">Adresse</label>
+                                            <input type="text" name="address" value="" placeholder="Adresse">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="">Ville</label>
+                                            <input type="text" name="city"  placeholder="Ville *" value="">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="">Région</label>
+                                            <input type="text" name="state" value="" placeholder="Région *">
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="">Pays</label>
+                                            <input type="text" name="country" value="" placeholder="Pays *">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+                        
+                    </div>
+                    <div class="col-lg-4 parag">
+                        <div class="border p-md-4 cart-totals ml-30">
+                            <div class="table-responsive">
+                                <div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <p class="fw-bold">Tax</p>
+                                        <p>0Fcfa</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <p class="fw-bold">Livraison</p>
+                                        <p>0Fcfa</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <p class="fw-bold">Remise</p>
+                                        <p>0Fcfa</p>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <p class="fw-bold">Total</p>
+                                        <p>{{cart_total_amount}} Fcfa</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if totalcartitems %}
+                                <button type="submit" class="btn mb-20 w-100">Passer la commande<i class="fi-rs-sign-out ml-15"></i></button>
+                            {% endif %}                    
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+                
+        {% else %}
+        <div class="col-lg-12 mb-40">
+            <h2 style="text-align: center; margin-bottom: 10px;">Votre Panier est vide</h2>
+            <div style="text-align: center;">
+                <a style="text-align: center;" href="{% url 'core:product-list' %}" class="btn btn-md">Retourner à la Boutique</a>
+            </div>
+        </div>
+        {% endif %}
+    </main>
+{% endblock content %}

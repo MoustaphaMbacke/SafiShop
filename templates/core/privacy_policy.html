@@ -1,0 +1,171 @@
+{% extends 'partials/base.html' %} 
+{% load static %}
+{% block content %}
+<main class="main pages">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Accueil</a>
+                <span></span> Pages <span></span> Politique de confidentialité
+            </div>
+        </div>
+    </div>
+    <div class="page-content pt-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-10 col-lg-12 m-auto">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="single-page pr-30 mb-lg-0 mb-sm-5">
+                                <div class="single-header style-2">
+                                    <h2>Politique de confidentialité</h2>
+                                    <div class="entry-meta meta-1 meta-3 font-xs mt-15 mb-15">
+                                        <span class="post-by">Par <a href="#">Safi</a></span>
+                                        <span class="post-on has-dot">08 Octobre 2025</span>
+                                        <span class="hit-count has-dot">1k Vues</span>
+                                    </div>
+                                </div>
+                                <div class="single-content mb-50 safi-privacy-policy">
+
+                                    <style>
+                                        .safi-privacy-policy h3 {color:#116f94;margin-top:25px;font-size:20px;}
+                                        .safi-privacy-policy p, .safi-privacy-policy ul {color:#333;line-height:1.7;margin-bottom:15px;}
+                                        .safi-privacy-policy ul {list-style:disc;padding-left:25px;}
+                                        .safi-privacy-policy .contact-box {background:#f8fbfd;border-left:4px solid #116f94;padding:12px;border-radius:6px;margin-top:20px;}
+                                        .safi-privacy-policy .footer-note {font-size:14px;color:#666;margin-top:25px;}
+                                    </style>
+
+                                    <p><strong>Dernière mise à jour :</strong> 08 Octobre 2025</p>
+                                    <p>Chez <strong>Safi-Shop</strong>, la protection de vos données personnelles est essentielle. Cette politique décrit comment nous collectons, utilisons et protégeons vos informations lorsque vous utilisez notre site ou effectuez un achat.</p>
+
+                                    <h3>1. Informations que nous collectons</h3>
+                                    <p>Lors de votre navigation ou d’un achat sur notre site, nous pouvons collecter :</p>
+                                    <ul>
+                                        <li><strong>Informations personnelles :</strong> nom, prénom, e‑mail, numéro de téléphone, adresses de livraison et de facturation.</li>
+                                        <li><strong>Informations de paiement :</strong> nécessaires au traitement sécurisé des transactions (non stockées sur nos serveurs).</li>
+                                        <li><strong>Données de navigation :</strong> adresse IP, type d’appareil, navigateur, pages consultées, durée de visite, cookies.</li>
+                                        <li><strong>Messages et avis :</strong> contenus envoyés via nos formulaires ou notre service client.</li>
+                                    </ul>
+
+                                    <h3>2. Utilisation des données</h3>
+                                    <p>Nous utilisons vos informations pour :</p>
+                                    <ul>
+                                        <li>Traiter vos commandes et gérer les livraisons.</li>
+                                        <li>Assurer la gestion de votre compte client.</li>
+                                        <li>Envoyer des notifications liées à vos commandes.</li>
+                                        <li>Vous informer sur nos offres et nouveautés (si vous y consentez).</li>
+                                        <li>Améliorer notre service et votre expérience sur le site.</li>
+                                        <li>Prévenir la fraude et assurer la sécurité des transactions.</li>
+                                    </ul>
+
+                                    <h3>3. Partage des données</h3>
+                                    <p>Nous ne vendons jamais vos données. Elles peuvent être partagées uniquement avec des prestataires de confiance (livraison, paiement, hébergement, analyse de trafic) dans le strict respect de la confidentialité.</p>
+
+                                    <h3>4. Sécurité</h3>
+                                    <p>Nous mettons en œuvre des mesures de sécurité avancées : chiffrement SSL, stockage sécurisé et accès restreint aux données.</p>
+
+                                    <h3>5. Conservation</h3>
+                                    <p>Les données sont conservées uniquement le temps nécessaire au traitement de vos commandes, à la gestion de votre compte et au respect des obligations légales.</p>
+
+                                    <h3>6. Cookies</h3>
+                                    <p>Nous utilisons des cookies pour garantir le bon fonctionnement du site, analyser l’audience et personnaliser votre expérience. Vous pouvez gérer vos préférences via les paramètres de votre navigateur.</p>
+
+                                    <h3>7. Vos droits</h3>
+                                    <p>Vous disposez des droits d’accès, de rectification, de suppression, d’opposition et de portabilité de vos données. Pour toute demande :</p>
+
+                                    <div class="contact-box">
+                                        <strong>Contact — Safi-Shop</strong>
+                                        <p>📧 <a href="mailto:contact@safi-shop.com">contact@safi-shop.com</a><br>
+                                        🌐 <a href="https://www.safi-shop.com" target="_blank">www.safi-shop.com</a></p>
+                                    </div>
+
+                                    <h3>8. Modifications de la politique</h3>
+                                    <p>Cette politique peut être mise à jour à tout moment. Les modifications importantes seront annoncées sur cette page.</p>
+
+                                    <p class="footer-note">⚖️ Ce document est fourni à titre informatif. Pour une conformité totale (par ex. RGPD), veuillez consulter un spécialiste juridique.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Bandeau cookies Safi-Shop -->
+<div id="safi-cookie-banner" class="safi-cookie-banner">
+    <div class="safi-cookie-content">
+        <p>🍪 Nous utilisons des cookies pour améliorer votre expérience sur Safi-Shop. En continuant, vous acceptez notre 
+        <a href="{% url 'core:privacy_policy' %}" class="safi-link">Politique de confidentialité</a>.</p>
+        <button id="safi-accept-cookies" class="safi-btn">Accepter</button>
+    </div>
+</div>
+
+<style>
+    .safi-cookie-banner {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        background: #116f94;
+        color: #fff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+    }
+    .safi-cookie-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+        max-width: 800px;
+    }
+    .safi-cookie-banner p {
+        margin: 0;
+        flex: 1;
+        line-height: 1.5;
+    }
+    .safi-link {
+        color: #fff;
+        text-decoration: underline;
+    }
+    .safi-btn {
+        background: #fff;
+        color: #116f94;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .safi-btn:hover {
+        background: #e9f5fa;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const banner = document.getElementById("safi-cookie-banner");
+        const acceptBtn = document.getElementById("safi-accept-cookies");
+        if (!localStorage.getItem("cookiesAccepted")) {
+            banner.style.display = "flex";
+        }
+        acceptBtn.addEventListener("click", () => {
+            localStorage.setItem("cookiesAccepted", "true");
+            banner.style.display = "none";
+        });
+    });
+</script>
+
+{% endblock content %}
