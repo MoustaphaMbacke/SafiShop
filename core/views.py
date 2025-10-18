@@ -420,17 +420,22 @@ def save_checkout_info(request):
             country = request.session['country']
 
             # Create ORder Object
-            order = CartOrder.objects.create(
-                user=request.user,
-                price=total_amount,
-                full_name=full_name,
-                email=email,
-                phone=phone,
-                address=address,
-                city=city,
-                state=state,
-                country=country,
-            )
+
+            if request.user.is_authenticated:
+                
+                order = CartOrder.objects.create(
+                    user=request.user,
+                    price=total_amount,
+                    full_name=full_name,
+                    email=email,
+                    phone=phone,
+                    address=address,
+                    city=city,
+                    state=state,
+                    country=country,
+                )
+            else:
+                return redirect("userauths:sign-in")
 
             del request.session['full_name']
             del request.session['email']

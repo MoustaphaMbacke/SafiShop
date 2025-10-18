@@ -20,6 +20,7 @@ defusedxml==0.7.1
 diff-match-patch==20241021
 dj-database-url==3.0.0
 Django==5.2.3
+django-admin-honeypot-updated-2021==1.2.0
 django-admin-sortable2==2.2.8
 django-ajax-selects==3.0.3
 django-anymail==13.0
@@ -33,6 +34,7 @@ django-filter==25.1
 django-formset-js-improved==0.5.0.3
 django-heroku==0.3.1
 django-import-export==4.3.7
+django-ipware==7.0.1
 django-jazzmin==3.0.1
 django-jquery-js==3.1.1
 django-js-asset==3.1.2
@@ -74,7 +76,7 @@ paypal-payouts-sdk==1.0.0
 paypalhttp==1.0.1
 pillow==11.2.1
 propcache==0.3.2
-psycopg2
+psycopg2==2.9.10
 psycopg2-binary==2.9.11
 pyasn1==0.6.1
 pyasn1_modules==0.4.2
@@ -84,6 +86,7 @@ pyOpenSSL==25.1.0
 python-dateutil==2.9.0.post0
 python-decouple==3.8
 python-dotenv==1.1.1
+python-ipware==3.0.0
 python3-openid==3.2.0
 pytz==2025.2
 redis==6.2.0
@@ -112,31 +115,3 @@ validate_email==1.3
 whitenoise==6.11.0
 yarl==1.20.1
 zope.interface==7.2
-
-# [Unit]
-# Description=gunicorn daemon
-# After=network.target
-
-# [Service]
-# User=ubuntu
-# Group=www-data
-# WorkingDirectory=/home/ubuntu/SafiShop
-# ExecStart=/home/ubuntu/SafiShop/envi1/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/SafiShop.sock safi.wsgi:application
-
-# [Install]
-# WantedBy=multi-user.target
-
-# server {
-#     listen 80;
-#     server_name 34.241.93.129;  # Replace with your server's IP address or domain name
-
-#     location = /favicon.ico { access_log off; log_not_found off; }
-#     location /static/ {
-#         root /home/ubuntu/SafiShop;
-#     }
-
-#     location / {
-#         include proxy_params;
-#         proxy_pass http://unix:/home/ubuntu/SafiShop.sock;
-#     }
-# }

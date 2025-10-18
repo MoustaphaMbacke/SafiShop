@@ -37,11 +37,11 @@ env.read_env()
 
 import os
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-!y*=s&zo*)x4(mw@8mnxxfz!*7=)m)jh_(mf9(^lr6f=3(6^=j')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [ '127.0.0.1', 'safishop-igof.onrender.com', 'www.safi-shop.com']
 CSRF_TRUSTED_ORIGINS = ['https://safishop-igof.onrender.com', 'https://www.safi-shop.com']
@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.humanize',
     # "newsletter",
 
@@ -78,8 +80,6 @@ INSTALLED_APPS = [
     # blog
     'blog',
     # les fichiers media
-    # 'cloudinary',
-    # 'cloudinary_storage',
 
     # 'whitenoise.runserver_nostatic',
 ]
@@ -126,6 +126,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+ENVIRONNEMENT = env.str('ENVIRONNEMENT', 'development')
+POSGRES_LOCALITY = env.bool('POSGRES_LOCALITY', True)
+
+if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
+    DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
 
 
 # DATABASES = {
@@ -197,8 +204,24 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'  # or any prefix you choose
+
+# Environment flags (ensure these are defined before use)
+# Read the deployment environment (default to 'development') and whether
+# Postgres is running locally (default False).
+
+
+if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    MEDIA_ROOT = BASE_DIR / 'media'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET')
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
