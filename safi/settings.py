@@ -126,9 +126,19 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Environment flags used by this settings module:
+# - ENVIRONNEMENT: deployment environment name (e.g. 'development' or 'production').
+#   This is read from the environment and defaults to 'development' if not set.
+# - POSGRES_LOCALITY: boolean override to indicate a local Postgres setup (True)
+#   or a remote/production Postgres (False). Default here is True for local dev.
 ENVIRONNEMENT = env.str('ENVIRONNEMENT', 'development')
 POSGRES_LOCALITY = env.bool('POSGRES_LOCALITY', True)
 
+# If running in production-like mode we switch the database to the one
+# referenced by DATABASE_URL. We treat the following as production-like:
+#  - ENVIRONNEMENT == 'production'
+#  - POSGRES_LOCALITY == True (explicit override in some setups)
 if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
     DATABASES = {
         'default': dj_database_url.parse(env('DATABASE_URL'))
@@ -211,16 +221,30 @@ MEDIA_URL = '/media/'  # or any prefix you choose
 # Read the deployment environment (default to 'development') and whether
 # Postgres is running locally (default False).
 
-
-if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
+# Storage selection logic:
+# - We want to use Cloudinary for media when running in production. To make this
+#   robust, we enable Cloudinary when any of the following is true:
+#     * DEBUG is False (explicit production mode),
+#     * ENVIRONNEMENT == 'production', or
+#     * POSGRES_LOCALITY is True (explicit override in some setups).
+# - Otherwise, use local filesystem storage (MEDIA_ROOT) for development.
+if (not DEBUG) or (ENVIRONNEMENT == 'production') or (POSGRES_LOCALITY is True):
+    # Use Cloudinary for media uploads when not in DEBUG (production) or when
+    # environment flags explicitly indicate production-like behavior.
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    # Ensure the Cloudinary credentials exist in environment variables or .env
 else:
+    # Local filesystem storage for development/debugging convenience
     MEDIA_ROOT = BASE_DIR / 'media'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dzotedeoq',
-    'API_KEY': env('CLOUDINARY_API_KEY'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET')
+    # CLOUDINARY credentials: try in this order
+    # 1) env() provided by environs (reads from .env or environment)
+    # 2) os.environ fallback (in case variables are set by the system)
+    # 3) None (will raise at runtime if Cloudinary is required but missing)
+    'CLOUD_NAME': env.str('CLOUDINARY_CLOUD_NAME', os.environ.get('CLOUDINARY_CLOUD_NAME')),
+    'API_KEY': env.str('CLOUDINARY_API_KEY', os.environ.get('CLOUDINARY_API_KEY')),
+    'API_SECRET': env.str('CLOUDINARY_API_SECRET', os.environ.get('CLOUDINARY_API_SECRET'))
 }
 
 # Default primary key field type
