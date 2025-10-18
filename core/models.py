@@ -38,7 +38,7 @@ def user_directory_path(instance, filename):
 class Category(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="cat", alphabet="abcdefgh12345")
     title = models.CharField(max_length=100, default="Tech")
-    image = models.ImageField(upload_to="category", default="category.jpg")
+    image = models.ImageField(upload_to="category/", default="category.jpg")
     featured = models.BooleanField(default=False)
 
     class Meta:
