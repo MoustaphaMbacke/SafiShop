@@ -143,7 +143,7 @@
                                     <ul c>
                                         {% for category in categories %}
                                         <li>
-                                            <a href="{% url 'core:category-product-list' category.cid %}"> <img src="{{ category.image.url }}" alt="" />{{ category.title }}</a>
+                                            <a href="{% url 'core:category-product-list' category.cid %}"> <img src="{{ category.image|storage_url }}" alt="" />{{ category.title }}</a>
                                         </li>
                                         {% endfor %}
                                     </ul>
@@ -521,7 +521,7 @@
                         {% for c in categories%}
                         <div class="card-1">
                             <figure class="img-hover-scale overflow-hidden">
-                                <a href="{% url 'core:category-product-list' c.cid %}"><img src="{{c.image.url}}" alt="" /></a>
+                                <a href="{% url 'core:category-product-list' c.cid %}"><img src="{{c.image|storage_url}}" alt="" /></a>
                             </figure>
                             <h6>
                                 <a href="{% url 'core:category-product-list' c.cid %}">{{c.title}}</a>

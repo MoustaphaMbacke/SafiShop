@@ -43,7 +43,7 @@
                                             <div class="card-body mb-2" style="display: flex; align-items: center; gap: 10px;">
                                                 <div>
                                                     {% if profile.image %}
-                                                    <span><img src="{{ profile.image.url }}" style="width: 150px; object-fit: cover; border-radius:50%; height:150px;" alt=""></span>
+                                                    <span><img src="{{ profile.image|storage_url }}" style="width: 150px; object-fit: cover; border-radius:50%; height:150px;" alt=""></span>
                                                     {% else %}
                                                     <span><img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" style="width: 150px; object-fit: cover; border-radius:50%; height:150px;" alt=""></span>
 

@@ -32,7 +32,7 @@
                                     <div class="col-md-6">
                                         
                                         <div class="logo d-flex align-items-center">
-                                            <a href="index.html" class="mr-20"><img src="{{item.vendor.image.url}}" alt="logo" /></a>
+                                            <a href="index.html" class="mr-20"><img src="{{ item.vendor.image|storage_url }}" alt="logo" /></a>
                                             <div class="text">
                                                 <strong class="text-brand"> {{item.vendor}} </strong> <br />
                                                 {{item.vendor.address}}

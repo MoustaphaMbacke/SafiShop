@@ -68,7 +68,7 @@
                                             <li>
                                                 <input data-filter="category" class="form-check-input filter-checkbox" type="checkbox" name="checkbox" id="exampleCheckbox2" value="{{ c.id }}" />
                                                 &nbsp;&nbsp;
-                                                <a href="{% url 'core:category-product-list' c.cid %}"> <img src="{{c.image.url}}" alt="" />{{ c.title }}</a>
+                                                <a href="{% url 'core:category-product-list' c.cid %}"> <img src="{{c.image|storage_url}}" alt="" />{{ c.title }}</a>
                                             </li>
                                             {% endfor %}
                                         </ul>
@@ -131,8 +131,8 @@
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
                                         <a href="{% url 'core:product-detail' p.pid %}">
-                                            <img class="default-img" src="{{p.image.url}}" alt="" />
-                                            <img class="hover-img" src="{{p.image.url}}" alt="" />
+                                            <img class="default-img" src="{{p.image|storage_url}}" alt="" />
+                                            <img class="hover-img" src="{{p.image|storage_url}}" alt="" />
                                         </a>
                                     </div>
                                     
@@ -162,7 +162,7 @@
                                         <div class="add-cart">
                                             <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ p.id }}">
                                             <input type="hidden" class="product-pid-{{ p.id }}" value="{{ p.pid }}">
-                                            <input type="hidden" class="product-image-{{ p.id }}" value="{{ p.image.url }}">
+                                            <input type="hidden" class="product-image-{{ p.id }}" value="{{ p.image|storage_url }}">
                                             <input type="hidden" class="product-id-{{ p.id }}" value="{{ p.id }}">
                                             <input type="hidden" class="product-title-{{ p.id }}" value="{{ p.title }}">
 

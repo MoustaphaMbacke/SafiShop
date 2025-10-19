@@ -44,9 +44,9 @@
                                             </td>
                                             <td class="image product-thumbnail pt-40">
                                                 {% if w.product.pid %}
-                                                    <a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' w.product.pid %}"> <img src="{{w.product.image.url}}" alt="image de {{ w.product.title }}"></a>
+                                                    <a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' w.product.pid %}"> <img src="{{w.product.image|storage_url}}" alt="image de {{ w.product.title }}"></a>
                                                 {% else %}
-                                                    <img src="{{w.product.image.url}}" alt="image de {{ w.product.title }}">
+                                                    <img src="{{w.product.image|storage_url}}" alt="image de {{ w.product.title }}">
                                                 {% endif %}
                                             </td>
                                             <td><h6 class="mb-5">

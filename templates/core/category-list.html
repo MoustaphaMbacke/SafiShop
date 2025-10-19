@@ -1,4 +1,5 @@
 {% extends 'partials/base.html' %}
+{% load storage_tags %}
 {% load static %}
 
 {% block content %}
@@ -56,7 +57,7 @@
                                 <article class="col-xl-4 col-lg-6 col-md-6 text-center hover-up mb-30 animated">
                                     <div class="post-thumb">
                                         <a href="{% url 'core:category-product-list' category.cid %}">
-                                            <img class="border-radius-15" src="{{category.image.url}}" alt="" />
+                                            <img class="border-radius-15" src="{{ category.image|storage_url }}" alt="" />
                                         </a>
                                         <div class="entry-meta">
                                             <!-- <a class="entry-meta meta-2" href="blog-category-grid.html"><i class="fi-rs-heart"></i></a> -->
@@ -85,7 +86,7 @@
                                 <ul>
                                     {% for category in categories %}
                                     <li>
-                                        <a href="shop-grid-right.html"> <img src="{{category.image.url}}" alt="" />{{category.title}}</a><span class="count">{{category.category.count}}</span>
+                                        <a href="shop-grid-right.html"> <img src="{{category.image|storage_url}}" alt="" />{{category.title}}</a><span class="count">{{category.category.count}}</span>
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -96,7 +97,7 @@
                                 {% for cp in categories_populaires %}
                                 <div class="single-post clearfix">
                                     <div class="image">
-                                        <img src="{{cp.image.url}}" alt="{{cp.title}}" />
+                                        <img src="{{cp.image|storage_url}}" alt="{{cp.title}}" />
                                     </div>
                                     <div class="content pt-10">
                                         <h5><a href="{% url 'core:category-product-list' cp.cid %}">{{cp.title}}</a></h5>

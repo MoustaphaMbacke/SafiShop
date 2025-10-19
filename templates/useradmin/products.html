@@ -34,7 +34,7 @@
                     <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                         <a class="itemside" href="{% url 'core:product-detail' p.pid %}">
                             <div class="left">
-                                <img src="{{p.image.url}}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 15px;" class="img-sm img-thumbnail" alt="Item" />
+                                <img src="{{ p.image|storage_url }}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 15px;" class="img-sm img-thumbnail" alt="Item" />
                             </div>
                             <div class="info">
                                 <h6 class="mb-0">{{p.title}}</h6>
