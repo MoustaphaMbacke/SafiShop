@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
-import environ
 import dj_database_url
 
 from decouple import config
@@ -46,6 +45,36 @@ DEBUG = False
 ALLOWED_HOSTS = [ '127.0.0.1', 'safishop-igof.onrender.com', 'www.safi-shop.com']
 CSRF_TRUSTED_ORIGINS = ['https://safishop-igof.onrender.com', 'https://www.safi-shop.com']
 # SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
+# --- Environment & storage early configuration ---
+# Read deployment flags early so storage backend is configured before
+# apps/models are imported (ensures ImageField uses Cloudinary storage when
+# appropriate instead of defaulting to filesystem storage).
+ENVIRONNEMENT = env.str('ENVIRONNEMENT', 'development')
+POSGRES_LOCALITY = env.bool('POSGRES_LOCALITY', True)
+
+# Cloudinary credentials: try env first, then os.environ as fallback
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env.str('CLOUDINARY_CLOUD_NAME', os.environ.get('CLOUDINARY_CLOUD_NAME')),
+    'API_KEY': env.str('CLOUDINARY_API_KEY', os.environ.get('CLOUDINARY_API_KEY')),
+    'API_SECRET': env.str('CLOUDINARY_API_SECRET', os.environ.get('CLOUDINARY_API_SECRET'))
+}
+
+# Storage selection: enable Cloudinary when in production-like mode or when
+# DEBUG is explicitly False. This ensures media are uploaded to Cloudinary
+# when DEBUG=False (your requested behavior).
+if (not DEBUG) or (ENVIRONNEMENT == 'production') or (POSGRES_LOCALITY is True):
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    MEDIA_ROOT = BASE_DIR / 'media'
+
+# If running in production-like mode, swap the DATABASES to DATABASE_URL
+if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
+    DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
+
+# --- End early configuration ---
 
 
 
@@ -216,36 +245,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'  # or any prefix you choose
-
-# Environment flags (ensure these are defined before use)
-# Read the deployment environment (default to 'development') and whether
-# Postgres is running locally (default False).
-
-# Storage selection logic:
-# - We want to use Cloudinary for media when running in production. To make this
-#   robust, we enable Cloudinary when any of the following is true:
-#     * DEBUG is False (explicit production mode),
-#     * ENVIRONNEMENT == 'production', or
-#     * POSGRES_LOCALITY is True (explicit override in some setups).
-# - Otherwise, use local filesystem storage (MEDIA_ROOT) for development.
-if (not DEBUG) or (ENVIRONNEMENT == 'production') or (POSGRES_LOCALITY is True):
-    # Use Cloudinary for media uploads when not in DEBUG (production) or when
-    # environment flags explicitly indicate production-like behavior.
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    # Ensure the Cloudinary credentials exist in environment variables or .env
-else:
-    # Local filesystem storage for development/debugging convenience
-    MEDIA_ROOT = BASE_DIR / 'media'
-
-CLOUDINARY_STORAGE = {
-    # CLOUDINARY credentials: try in this order
-    # 1) env() provided by environs (reads from .env or environment)
-    # 2) os.environ fallback (in case variables are set by the system)
-    # 3) None (will raise at runtime if Cloudinary is required but missing)
-    'CLOUD_NAME': env.str('CLOUDINARY_CLOUD_NAME', os.environ.get('CLOUDINARY_CLOUD_NAME')),
-    'API_KEY': env.str('CLOUDINARY_API_KEY', os.environ.get('CLOUDINARY_API_KEY')),
-    'API_SECRET': env.str('CLOUDINARY_API_SECRET', os.environ.get('CLOUDINARY_API_SECRET'))
-}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
