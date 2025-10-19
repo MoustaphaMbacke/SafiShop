@@ -47,7 +47,7 @@
                                     <figure class="text-lg-center">
                                         
                                         {% if profile.image %}
-                                            <img class="img-lg mb-3 img-avatar" src="{{ profile.image|storage_url }}" alt="Photo d'utilisateur" />
+                                            <img class="img-lg mb-3 img-avatar" src="{{profile.image.url}}" alt="Photo d'utilisateur" />
                                         {% else %}
                                             <img class="img-lg mb-3 img-avatar" src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg" alt="Photo d'utilisateur" />
                                         {% endif %}

@@ -1,5 +1,4 @@
 {% load static %}
-{% load storage_tags %}
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -210,7 +209,7 @@
                                     <ul c>
                                         {% for category in categories %}
                                         <li>
-                                            <a href="{% url 'core:category-product-list' category.cid %}"> <img src="{{ category.image|storage_url }}" alt="" />{{ category.title }}</a>
+                                            <a href="{% url 'core:category-product-list' category.cid %}"> <img src="{{ category.image.url }}" alt="" />{{ category.title }}</a>
                                         </li>
                                         {% endfor %}
                                     </ul>

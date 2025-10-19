@@ -45,12 +45,12 @@
                                             <td class="image product-thumbnail pt-40">
                                                 {% if w.product.pid %}
                                                     {% if w.product.pid %}
-                                                        <a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' w.product.pid %}"> <img src="{{w.product.image|storage_url}}" alt="image de {{ w.product.title }}"></a>
+                                                        <a class="product-name mb-10 text-heading" href="{% url 'core:product-detail' w.product.pid %}"> <img src="{{w.product.image.url}}" alt="image de {{ w.product.title }}"></a>
                                                     {% else %}
-                                                        <img src="{{w.product.image|storage_url}}" alt="image de {{ w.product.title }}">
+                                                        <img src="{{w.product.image.url}}" alt="image de {{ w.product.title }}">
                                                     {% endif %}
                                                 {% else %}
-                                                    <img src="{{w.product.image|storage_url}}" alt="image de {{ w.product.title }}">
+                                                    <img src="{{w.product.image.url}}" alt="image de {{ w.product.title }}">
                                                 {% endif %}
                                             </td>
                                             <td><h6 class="mb-5">
@@ -112,7 +112,7 @@
                                         <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
                                         <label class="form-check-label" for="exampleCheckbox1"></label>
                                     </td>
-                                    <td class="image product-thumbnail pt-40"><img src="{{w.product.image|storage_url}}" alt="#" /></td>
+                                    <td class="image product-thumbnail pt-40"><img src="{{w.product.image.url}}" alt="#" /></td>
                                     <td class="product-des product-name">
                                         <h6>
                                             {% if w.product.pid %}
@@ -134,7 +134,7 @@
 
                                         <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ w.product.id }}">
                                         <input type="hidden" class="product-pid-{{ w.product.id }}" value="{{ w.product.pid }}">
-                                        <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image|storage_url }}">
+                                        <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image.url }}">
                                         <input type="hidden" class="product-id-{{ w.product.id }}" value="{{ w.product.id }}">
                                         <input type="hidden" class="product-title-{{ w.product.id }}" value="{{ w.product.title }}">
 

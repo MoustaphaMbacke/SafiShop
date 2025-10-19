@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 
+import environ
 import dj_database_url
 
 from decouple import config
@@ -36,45 +37,15 @@ env.read_env()
 
 import os
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-!y*=s&zo*)x4(mw@8mnxxfz!*7=)m)jh_(mf9(^lr6f=3(6^=j')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [ '127.0.0.1', 'safishop-igof.onrender.com', 'www.safi-shop.com']
 CSRF_TRUSTED_ORIGINS = ['https://safishop-igof.onrender.com', 'https://www.safi-shop.com']
 # SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
-
-# --- Environment & storage early configuration ---
-# Read deployment flags early so storage backend is configured before
-# apps/models are imported (ensures ImageField uses Cloudinary storage when
-# appropriate instead of defaulting to filesystem storage).
-ENVIRONNEMENT = env.str('ENVIRONNEMENT', 'development')
-POSGRES_LOCALITY = env.bool('POSGRES_LOCALITY', True)
-
-# Cloudinary credentials: try env first, then os.environ as fallback
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env.str('CLOUDINARY_CLOUD_NAME', os.environ.get('CLOUDINARY_CLOUD_NAME')),
-    'API_KEY': env.str('CLOUDINARY_API_KEY', os.environ.get('CLOUDINARY_API_KEY')),
-    'API_SECRET': env.str('CLOUDINARY_API_SECRET', os.environ.get('CLOUDINARY_API_SECRET'))
-}
-
-# Storage selection: enable Cloudinary when in production-like mode or when
-# DEBUG is explicitly False. This ensures media are uploaded to Cloudinary
-# when DEBUG=False (your requested behavior).
-if (not DEBUG) or (ENVIRONNEMENT == 'production') or (POSGRES_LOCALITY is True):
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-else:
-    MEDIA_ROOT = BASE_DIR / 'media'
-
-# If running in production-like mode, swap the DATABASES to DATABASE_URL
-if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
-    DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
-    }
-
-# --- End early configuration ---
 
 
 
@@ -88,8 +59,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary',
-    'cloudinary_storage',
     'django.contrib.humanize',
     # "newsletter",
 
@@ -109,6 +78,8 @@ INSTALLED_APPS = [
     # blog
     'blog',
     # les fichiers media
+    # 'cloudinary',
+    # 'cloudinary_storage',
 
     # 'whitenoise.runserver_nostatic',
 ]
@@ -149,29 +120,12 @@ WSGI_APPLICATION = 'safi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# Environment flags used by this settings module:
-# - ENVIRONNEMENT: deployment environment name (e.g. 'development' or 'production').
-#   This is read from the environment and defaults to 'development' if not set.
-# - POSGRES_LOCALITY: boolean override to indicate a local Postgres setup (True)
-#   or a remote/production Postgres (False). Default here is True for local dev.
-ENVIRONNEMENT = env.str('ENVIRONNEMENT', 'development')
-POSGRES_LOCALITY = env.bool('POSGRES_LOCALITY', True)
-
-# If running in production-like mode we switch the database to the one
-# referenced by DATABASE_URL. We treat the following as production-like:
-#  - ENVIRONNEMENT == 'production'
-#  - POSGRES_LOCALITY == True (explicit override in some setups)
-if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
-    DATABASES = {
-        'default': dj_database_url.parse(env('DATABASE_URL'))
-    }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # DATABASES = {
@@ -186,9 +140,9 @@ if ENVIRONNEMENT == 'production' or POSGRES_LOCALITY == True:
 #     }
 
 
-# DATABASES = {
-#         'default': dj_database_url.parse(env('DATABASE_URL'))
-#     }
+DATABASES = {
+        'default': dj_database_url.parse(env('DATABASE_URL'))
+    }
 
 
 # AMAZON
@@ -243,8 +197,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-MEDIA_URL = '/media/'  # or any prefix you choose
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
